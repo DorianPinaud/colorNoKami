@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 
 class ApiData(ABC):
@@ -15,5 +16,5 @@ class ApiData(ABC):
 class ApiDataFactory(ABC):
 
     @abstractmethod
-    def create_api_data(self, type: str) -> ApiData:
+    def create_api_data(self, type_name: str, params: List[str] = []):
         pass

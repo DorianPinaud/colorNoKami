@@ -3,7 +3,8 @@ from database_crafting.api_data.interfaces import ApiDataFactory
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
-from typing import Union
+from typing import Union, List
+from database_crafting.domain.book import Book
 
 
 class MongoBookRepository(BookRepository):
@@ -48,13 +49,13 @@ class MongoBookRepository(BookRepository):
         )
         self._books_db_collec = self._db.books
 
-    def get_books(self):
+    def get_books(self) -> List[Book]:
         if self._books_db_collec == None:
             raise Exception("MongoBookRepository instance should be init before")
         books = self._books_db_collec.find({})
         return [Book.create_book(book) for book in books]
 
-    def get_books_count(self):
+    def get_books_count(self) -> int:
         if self._books_db_collec == None:
             raise Exception("MongoBookRepository instance should be init before")
         return self._books_db_collec.count_documents({})
