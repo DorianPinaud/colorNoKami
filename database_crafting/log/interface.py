@@ -20,3 +20,11 @@ class LogRepository(ABC):
     @abstractmethod
     def count_log(self) -> int:
         pass
+
+    @abstractmethod
+    def derived_book_from_logs(self) -> None:
+        pass
+
+    @abstractmethod
+    def derived_chapters_from_logs(self) -> None:
+        pass

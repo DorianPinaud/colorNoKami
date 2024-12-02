@@ -1,5 +1,10 @@
-from database_crafting.api_data.interfaces import ApiDataFactory, ApiData
-from database_crafting.api_data.manga_dex_api_data import MangaDexApiData
+from database_crafting.api_data_fetcher.interfaces import (
+    ApiDataFetcherFactory,
+    ApiDataFetcher,
+)
+from database_crafting.api_data_fetcher.manga_dex_api_data_fetcher import (
+    MangaDexApiDataFetcher,
+)
 from database_crafting.network_client.interface import NetworkClient
 from abc import ABC, abstractmethod
 from typing import Dict, List
@@ -8,19 +13,19 @@ from typing import Dict, List
 class ApiDataCreationStartegy(ABC):
 
     @abstractmethod
-    def create(self, client: NetworkClient, params: List[str]) -> ApiData:
+    def create(self, client: NetworkClient, params: List[str]) -> ApiDataFetcher:
         pass
 
 
 class MangaDexBookApiDataCreationStrategy(ApiDataCreationStartegy):
 
-    def create(self, client: NetworkClient, params: List[str]) -> ApiData:
+    def create(self, client: NetworkClient, params: List[str]) -> ApiDataFetcher:
         api_param = {
             "title": "Official color",
             "limit": "100",
             "order[createdAt]": "asc",
         }
-        return MangaDexApiData(
+        return MangaDexApiDataFetcher(
             client,
             f"manga",
             api_param,
@@ -29,19 +34,19 @@ class MangaDexBookApiDataCreationStrategy(ApiDataCreationStartegy):
 
 class MangaDexChapterFeedApiDataCreationStrategy(ApiDataCreationStartegy):
 
-    def create(self, client: NetworkClient, params: List[str]) -> ApiData:
+    def create(self, client: NetworkClient, params: List[str]) -> ApiDataFetcher:
         api_param = {"order[createdAt]": "asc", "limit": "500"}
         if len(params) == 0:
             raise Exception("At least, the book id must be defined in parameter")
         book_id = params[0]
-        return MangaDexApiData(
+        return MangaDexApiDataFetcher(
             client,
             f"manga/{book_id}/feed",
             api_param,
         )
 
 
-class MangaDexApiDataFactory(ApiDataFactory):
+class MangaDexApiDataFetcherFactory(ApiDataFetcherFactory):
     _creation_strategies: Dict[str, ApiDataCreationStartegy]
     _network_client: NetworkClient
 
@@ -52,7 +57,7 @@ class MangaDexApiDataFactory(ApiDataFactory):
             "chapter_feed": MangaDexChapterFeedApiDataCreationStrategy(),
         }
 
-    def create_api_data(self, type_name: str, params: List[str] = []):
+    def create(self, type_name: str, params: List[str] = []):
         if not type_name in self._creation_strategies:
             raise Exception(f"{type_name} not found in the the MangaDexApiDataFactory")
         return self._creation_strategies[type_name].create(self._network_client, params)
