@@ -17,6 +17,9 @@ class ChapterRepository(ABC):
     def get_chapters_count(self) -> int:
         pass
 
+
+class ChapterPairedRepository(ABC):
+
     @abstractmethod
     def get_chapters_paired(self) -> List[ChapterPaired]:
         pass
