@@ -5,6 +5,9 @@ from database_crafting.api_data_fetcher.interfaces import (
 from database_crafting.api_data_fetcher.manga_dex_api_data_fetcher import (
     MangaDexApiDataFetcher,
 )
+from database_crafting.api_data_fetcher.manga_dex_partitioned_api_data_fetcher import (
+    MangaDexPartitionedApiDataFetcher,
+)
 from database_crafting.network_client.interface import NetworkClient
 from abc import ABC, abstractmethod
 from typing import Dict, List
@@ -25,7 +28,7 @@ class MangaDexBookApiDataCreationStrategy(ApiDataCreationStartegy):
             "limit": "100",
             "order[createdAt]": "asc",
         }
-        return MangaDexApiDataFetcher(
+        return MangaDexPartitionedApiDataFetcher(
             client,
             f"manga",
             api_param,
@@ -39,11 +42,20 @@ class MangaDexChapterFeedApiDataCreationStrategy(ApiDataCreationStartegy):
         if len(params) == 0:
             raise Exception("At least, the book id must be defined in parameter")
         book_id = params[0]
-        return MangaDexApiDataFetcher(
+        return MangaDexPartitionedApiDataFetcher(
             client,
             f"manga/{book_id}/feed",
             api_param,
         )
+
+
+class MangaDexChapterUrlApiDataCreationStrategy(ApiDataCreationStartegy):
+
+    def create(self, client: NetworkClient, params: List[str]) -> ApiDataFetcher:
+        if len(params) == 0:
+            raise Exception("At least, the chapter id must be defined in parameter")
+        chapter_id = params[0]
+        return MangaDexApiDataFetcher(client, f"/at-home/server/{chapter_id}")
 
 
 class MangaDexApiDataFetcherFactory(ApiDataFetcherFactory):
@@ -55,6 +67,7 @@ class MangaDexApiDataFetcherFactory(ApiDataFetcherFactory):
         self._creation_strategies = {
             "book": MangaDexBookApiDataCreationStrategy(),
             "chapter_feed": MangaDexChapterFeedApiDataCreationStrategy(),
+            "chapter_url": MangaDexChapterUrlApiDataCreationStrategy(),
         }
 
     def create(self, type_name: str, params: List[str] = []):

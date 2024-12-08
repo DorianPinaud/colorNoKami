@@ -1,38 +1,60 @@
-from typing import Dict
-
-
-class ChapterInfo:
-
-    def __init__(self, volume_nbr: int, chapter_nbr: int, translated_language: str):
-        self.volume_nbr = volume_nbr
-        self.chapter_nbr = chapter_nbr
-        self.translated_language = translated_language
-
-
-class ChapterInstance:
-
-    def __init__(self, id, manga_id):
-        self.id = id
-        self.manga_id = manga_id
+from __future__ import annotations
+from typing import Dict, List, Union
 
 
 class Chapter:
 
-    def __init__(self, chapter_instance: ChapterInstance, chapter_info: ChapterInfo):
-        self.chapter_instance = chapter_instance
-        self.chapter_info = chapter_info
+    def __init__(
+        self,
+        id: str,
+        manga_id: str,
+        volume_nbr: int,
+        chapter_nbr: int,
+        translated_language: str,
+    ):
+        self.id = id
+        self.manga_id: str = ""
+        self.volume_nbr: int = 0
+        self.chapter_nbr: int = 0
+        self.translated_language: str = ""
 
 
-class ChapterPaired:
+class ChapterPair:
 
     def __init__(
         self,
         id: str,
-        monochrome_chapter: ChapterInstance,
-        chromatic_chapter: ChapterInstance,
-        info: ChapterInfo,
+        monochrome_chapter: Chapter,
+        chromatic_chapter: Chapter,
     ):
         self.id = id
         self.monochrome_chapter = monochrome_chapter
         self.chromatic_chapter = chromatic_chapter
-        self.info = info
+
+
+class ScansUrls:
+
+    def __init__(self, base_url: str, hash: str, urls: List[str]):
+        self.base_url = base_url
+        self.hash = hash
+        self.scans_urls = urls
+
+
+class ChapterWithScansUrls:
+
+    def __init__(self, chapter: Chapter, scans_urls: ScansUrls):
+        self.chapter = chapter
+        self.scan_urls = scans_urls
+
+
+class ChapterPairWithScansUrls:
+
+    def __init__(
+        self,
+        id: str,
+        monochrome_chapter: ChapterWithScansUrls,
+        chromatic_chapter: ChapterWithScansUrls,
+    ):
+        self.id = id
+        self.monochrome_chapter = monochrome_chapter
+        self.chromatic_chapter = chromatic_chapter

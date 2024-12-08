@@ -17,6 +17,9 @@ class BookRepository(ABC):
     def get_books_count(self) -> int:
         pass
 
+
+class PairChaptersBybookService(ABC):
+
     @abstractmethod
-    def pair_chapter_by_book(self) -> None:
+    def pairing(self) -> None:
         pass

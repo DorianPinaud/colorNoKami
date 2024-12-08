@@ -1,6 +1,6 @@
 from database_crafting.chapter.interfaces import ChapterRepository
 
-from database_crafting.domain.chapter import Chapter, ChapterInstance, ChapterInfo
+from database_crafting.domain.chapter import Chapter
 
 from pymongo.database import Database
 
@@ -17,12 +17,11 @@ class MongoChapterRepository(ChapterRepository):
             raise Exception("chapters collection should exist in db at this point")
         return [
             Chapter(
-                ChapterInstance(record["_id"], record["manga_id"]),
-                ChapterInfo(
-                    int(record["volume"]),
-                    int(record["chapter"]),
-                    record["translatedLanguage"],
-                ),
+                record["_id"],
+                record["manga_id"],
+                int(record["volume"]),
+                int(record["chapter"]),
+                record["translatedLanguage"],
             )
             for record in self._db.chapters.find({})
         ]
