@@ -1,6 +1,10 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List
+
+from typing import List, Iterable, Any
+
+from database_crafting.domain.book import Book
 
 
 class ApiDataFetcher(ABC):

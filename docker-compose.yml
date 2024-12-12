@@ -1,0 +1,13 @@
+services:
+  database_crafting:
+    container_name: database_crafting
+    image: database_crafting:1.0.0
+    build:
+      context: ./
+      target: dev
+    working_dir: /work
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+    - ./:/work 
