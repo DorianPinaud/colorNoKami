@@ -1,9 +1,9 @@
-from database_crafting.book.interfaces import PairChaptersBybookService
+from database_crafting.book.interfaces import ChaptersBybookPairer
 
 from pymongo.database import Database
 
 
-class MongoPairChaptersByBookService(PairChaptersBybookService):
+class MongoChaptersByBookPairer(ChaptersBybookPairer):
 
     def __init__(self, db: Database):
         self._db = db

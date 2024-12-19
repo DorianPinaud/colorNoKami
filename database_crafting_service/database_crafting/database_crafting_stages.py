@@ -1,7 +1,7 @@
 from database_crafting.interfaces import DatabaseCraftingPipeline, DatabaseCraftingStage
 
 from database_crafting.log.interface import LogDerivedDataProcessor
-from database_crafting.book.interfaces import BookRepository, PairChaptersBybookService
+from database_crafting.book.interfaces import BookRepository, ChaptersBybookPairer
 from database_crafting.api_data_fetcher.interfaces import (
     ApiDataFetcherFactory,
     ApiDataFetcher,
@@ -9,7 +9,7 @@ from database_crafting.api_data_fetcher.interfaces import (
 from database_crafting.timeout.interface import TimeoutProcessorFactory
 from database_crafting.timeout.timeout_iterator import TimeoutIterator
 from database_crafting.chapter.interfaces import (
-    EnrichChaptersPairwithScansUrlsService,
+    ChaptersPairwithScansUrlsEnricher,
     ChapterPairRepository,
 )
 
@@ -20,9 +20,9 @@ class ChapterPairCraftingStage(DatabaseCraftingStage):
 
     def __init__(
         self,
-        pairing_service: PairChaptersBybookService,
+        pairing_service: ChaptersBybookPairer,
         chapter_pair_repo: ChapterPairRepository,
-        enrichment_service: EnrichChaptersPairwithScansUrlsService,
+        enrichment_service: ChaptersPairwithScansUrlsEnricher,
         fetcher_factory: ApiDataFetcherFactory,
         derived_data: LogDerivedDataProcessor,
         timeout_processor_factory: TimeoutProcessorFactory,

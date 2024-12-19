@@ -28,10 +28,10 @@ from database_crafting.timeout.interface import (
     TimeoutProcessorFactory,
 )
 from database_crafting.book.mongo_pair_chapters_by_book_service import (
-    MongoPairChaptersByBookService,
+    MongoChaptersByBookPairer,
 )
 from database_crafting.chapter.mongo_enrich_chapters_pair_with_scansurls_service import (
-    MongoEnrichChaptersPairwithScansUrlsService,
+    MongoChaptersPairwithScansUrlsEnricher,
 )
 
 
@@ -49,8 +49,8 @@ class MongoDatabaseCraftingPipeline(DatabaseCraftingPipeline):
         log_derived_book = MongoLogDerivedBooks(db)
         log_derived_chapter = MongoLogDerivedChapters(db)
         log_derived_scansurls = MongoLogDerivedScansUrls(db)
-        pair_chapter_service = MongoPairChaptersByBookService(db)
-        enrich_chapterpair = MongoEnrichChaptersPairwithScansUrlsService(db)
+        pair_chapter_service = MongoChaptersByBookPairer(db)
+        enrich_chapterpair = MongoChaptersPairwithScansUrlsEnricher(db)
         chapterpair_repo = MongoChapterPairRepository(db)
 
         self._stages = [

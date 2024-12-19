@@ -18,7 +18,7 @@ class BookRepository(ABC):
         pass
 
 
-class PairChaptersBybookService(ABC):
+class ChaptersBybookPairer(ABC):
 
     @abstractmethod
     def pairing(self) -> None:

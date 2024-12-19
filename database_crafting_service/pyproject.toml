@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "database_crafting"
+version = "0.1.0"
+description = "Build up the database for the UNet-Model"
+authors = ["dorian.pinaud <dorian.pinaud@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.28.1"
+pillow = "^11.0.0"
+pymongo = "^4.10.1"
+singleton-decorator = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.1.1"
+mypy = "^1.13.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -33,7 +33,7 @@ class ChapterPairRepository(ABC):
         pass
 
 
-class EnrichChaptersPairwithScansUrlsService(ABC):
+class ChaptersPairwithScansUrlsEnricher(ABC):
 
     @abstractmethod
     def enrich(self) -> None:

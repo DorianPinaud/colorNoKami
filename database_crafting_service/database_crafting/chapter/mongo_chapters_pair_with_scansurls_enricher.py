@@ -1,10 +1,10 @@
-from database_crafting.chapter.interfaces import EnrichChaptersPairwithScansUrlsService
+from database_crafting.chapter.interfaces import ChaptersPairwithScansUrlsEnricher
 
 from pymongo.database import Database
 
 
-class MongoEnrichChaptersPairwithScansUrlsService(
-    EnrichChaptersPairwithScansUrlsService
+class MongoChaptersPairwithScansUrlsEnricher(
+    ChaptersPairwithScansUrlsEnricher
 ):
 
     def __init__(self, db: Database):
