@@ -8,9 +8,12 @@ authors = ["dorian.pinaud <dorian.pinaud@gmail.com>"]
 python = "^3.11"
 httpx = "^0.28.1"
 pillow = "^11.0.0"
-pymongo = "^4.10.1"
 singleton-decorator = "^1.0.0"
+pymongo = "^4.10.1"
+asyncio = "^3.4.3"
 
+[tool.poetry.scripts]
+service = "database_crafting.service:start_service"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"

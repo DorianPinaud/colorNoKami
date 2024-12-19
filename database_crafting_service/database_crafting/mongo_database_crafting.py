@@ -27,10 +27,10 @@ from database_crafting.api_data_fetcher.manga_dex_api_data_fetcher_factory impor
 from database_crafting.timeout.interface import (
     TimeoutProcessorFactory,
 )
-from database_crafting.book.mongo_pair_chapters_by_book_service import (
+from database_crafting.book.mongo_chapters_by_book_pairer import (
     MongoChaptersByBookPairer,
 )
-from database_crafting.chapter.mongo_enrich_chapters_pair_with_scansurls_service import (
+from database_crafting.chapter.mongo_chapters_pair_with_scansurls_enricher import (
     MongoChaptersPairwithScansUrlsEnricher,
 )
 

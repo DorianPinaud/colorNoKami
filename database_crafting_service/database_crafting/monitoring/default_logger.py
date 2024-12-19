@@ -1,13 +1,14 @@
-from database_crafting.logging.interfaces import LoggingService
+from database_crafting.monitoring.interfaces import LoggingService
 from singleton_decorator import singleton  # type: ignore
 import logging
+from logging.config import fileConfig
 
 
 @singleton
 class DefaultLogger(LoggingService):
 
     def __init__(self):
-        logging.config.fileConfig("logging.ini")
+        fileConfig("logging.ini")
 
     def info(self, msg: str) -> None:
         logger = logging.getLogger()
